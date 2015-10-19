@@ -25,6 +25,7 @@ from keystoneclient.i18n import _LW
 from keystoneclient import utils
 
 LOG = logging.getLogger(__name__)
+LOG.setLevel(logging.DEBUG)
 
 
 def get_options():
@@ -243,10 +244,13 @@ class BaseIdentityPlugin(base.BaseAuthPlugin):
         # to make calls from many threads. As a token expires all the threads
         # will try and fetch a new token at once, so we want to ensure that
         # only one thread tries to actually fetch from keystone at once.
+        LOG.debug("XXX: get_access: enter")
         with self._lock:
+            LOG.debug("XXX: get_access: locked")
             if self._needs_reauthenticate():
                 self.auth_ref = self.get_auth_ref(session)
-
+            LOG.debug("XXX: get_access: unlocked")
+        LOG.debug("XXX: get_access: exit")
         return self.auth_ref
 
     def invalidate(self):

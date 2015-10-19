@@ -22,6 +22,7 @@ from keystoneclient import exceptions
 from keystoneclient import utils
 
 _logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
 
 
 @six.add_metaclass(abc.ABCMeta)
